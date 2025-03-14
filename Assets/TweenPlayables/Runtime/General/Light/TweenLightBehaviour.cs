@@ -1,18 +1,14 @@
 using System;
 using UnityEngine;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class TweenLightBehaviour : TweenAnimationBehaviour<Light>
+    public class TweenLightBehaviour : TweenAnimationBehaviour<Light>
     {
-        [SerializeField] ColorTweenParameter color;
-        [SerializeField] FloatTweenParameter intensity;
-        [SerializeField] FloatTweenParameter shadowStrength;
-
-        public ReadOnlyTweenParameter<Color> Color => color;
-        public ReadOnlyTweenParameter<float> Intensity => intensity;
-        public ReadOnlyTweenParameter<float> ShadowStrength => shadowStrength;
+        public ColorTweenParameter color;
+        public FloatTweenParameter intensity;
+        public FloatTweenParameter shadowStrength;
 
         public override void OnTweenInitialize(Light playerData)
         {
@@ -21,4 +17,5 @@ namespace TweenPlayables
             shadowStrength.SetInitialValue(playerData, playerData.shadowStrength);
         }
     }
+
 }

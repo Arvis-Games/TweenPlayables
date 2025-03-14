@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     public abstract class TweenAnimationMixerBehaviour<TBinding, TAnimationBehaviour> : PlayableBehaviour
         where TBinding : Component
         where TAnimationBehaviour : TweenAnimationBehaviour<TBinding>, new()
     {
-        TBinding target;
-        readonly List<ScriptPlayable<TAnimationBehaviour>> playables = new();
+        private TBinding target;
+        private List<ScriptPlayable<TAnimationBehaviour>> playables = new List<ScriptPlayable<TAnimationBehaviour>>();
 
         public override void OnPlayableDestroy(Playable playable)
         {

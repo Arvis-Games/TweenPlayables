@@ -1,45 +1,43 @@
 using UnityEngine;
 using TMPro;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     public abstract class ValueMixer<T>
     {
         public T Value { get; protected set; }
-        public bool HasValue => count > 0;
-        int count;
+        public int ValueCount { get; protected set; }
 
         public void Blend(T value, float weight)
         {
-            BlendCore(value, weight);
-            count++;
+            BlendInternal(value, weight);
+            ValueCount++;
         }
 
         public virtual void Clear()
         {
-            Value = default;
-            count = 0;
+            this.Value = default;
+            ValueCount = 0;
         }
 
-        protected abstract void BlendCore(T value, float weight);
+        protected abstract void BlendInternal(T value, float weight);
     }
 
-    public sealed class FloatValueMixer : ValueMixer<float>
+    public class FloatValueMixer : ValueMixer<float>
     {
-        protected override void BlendCore(float value, float weight)
+        protected override void BlendInternal(float value, float weight)
         {
-            Value += value * weight;
+            this.Value += value * weight;
         }
     }
 
-    public sealed class IntValueMixer : ValueMixer<int>
+    public class IntValueMixer : ValueMixer<int>
     {
-        float valueFloat;
-
-        protected override void BlendCore(int value, float weight)
+        private float valueFloat;
+        protected override void BlendInternal(int value, float weight)
         {
-            valueFloat += value * weight;
-            Value = (int)valueFloat;
+            this.valueFloat += value * weight;
+            this.Value = (int)valueFloat;
         }
 
         public override void Clear()
@@ -49,40 +47,40 @@ namespace TweenPlayables
         }
     }
 
-    public sealed class ColorValueMixer : ValueMixer<Color>
+    public class ColorValueMixer : ValueMixer<Color>
     {
-        protected override void BlendCore(Color value, float weight)
+        protected override void BlendInternal(Color value, float weight)
         {
-            Value += value * weight;
+            this.Value += value * weight;
         }
     }
 
-    public sealed class Vector3ValueMixer : ValueMixer<Vector3>
+    public class Vector3ValueMixer : ValueMixer<Vector3>
     {
-        protected override void BlendCore(Vector3 value, float weight)
+        protected override void BlendInternal(Vector3 value, float weight)
         {
-            Value += value * weight;
+            this.Value += value * weight;
         }
     }
 
-    public sealed class Vector2ValueMixer : ValueMixer<Vector2>
+    public class Vector2ValueMixer : ValueMixer<Vector2>
     {
-        protected override void BlendCore(Vector2 value, float weight)
+        protected override void BlendInternal(Vector2 value, float weight)
         {
-            Value += value * weight;
+            this.Value += value * weight;
         }
     }
 
-    public sealed class VertexGradientValueMixer : ValueMixer<VertexGradient>
+    public class VertexGradientValueMixer : ValueMixer<VertexGradient>
     {
-        protected override void BlendCore(VertexGradient value, float weight)
+        protected override void BlendInternal(VertexGradient value, float weight)
         {
-            Value = new VertexGradient()
+            this.Value = new VertexGradient()
             {
-                topLeft = Value.topLeft + value.topLeft * weight,
-                topRight = Value.topRight + value.topRight * weight,
-                bottomLeft = Value.bottomLeft + value.bottomLeft * weight,
-                bottomRight = Value.bottomRight + value.bottomRight * weight
+                topLeft = this.Value.topLeft + value.topLeft * weight,
+                topRight = this.Value.topRight + value.topRight * weight,
+                bottomLeft = this.Value.bottomLeft + value.bottomLeft * weight,
+                bottomRight = this.Value.bottomRight + value.bottomRight * weight
             };
         }
     }

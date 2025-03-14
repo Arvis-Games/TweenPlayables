@@ -1,34 +1,40 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Timeline;
-using System.Collections.Generic;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomTimelineEditor(typeof(TweenCanvasGroupTrack))]
-    public sealed class TweenCanvasGroupTrackEditor : TweenAnimationTrackEditor
+    public class TweenCanvasGroupTrackEditor : TweenAnimationTrackEditor
     {
-        public override string DefaultTrackName => "Tween CanvasGroup Track";
-        public override Color TrackColor => Styles.UGUIColor;
-        public override Texture2D TrackIcon => Styles.CanvasGroupIcon;
+        public override string defaultTrackName => "Tween CanvasGroup Track";
+        public override Color trackColor => Styling.uguiColor;
+        public override Texture2D trackIcon => Styling.canvasGroupIcon;
     }
 
     [CustomTimelineEditor(typeof(TweenCanvasGroupClip))]
-    public sealed class TweenCanvasGroupClipEditor : TweenAnimationClipEditor
+    public class TweenCanvasGroupClipEditor : TweenAnimationClipEditor
     {
-        public override string DefaultClipName => "Tween CanvasGroup";
-        public override Color ClipColor => Styles.UGUIColor;
-        public override Texture2D ClipIcon => Styles.CanvasGroupIcon;
+        public override string defaultClipName => "Tween CanvasGroup";
+        public override Color clipColor => Styling.uguiColor;
+        public override Texture2D clipIcon => Styling.canvasGroupIcon;
     }
 
     [CustomPropertyDrawer(typeof(TweenCanvasGroupBehaviour))]
-    public sealed class TweenCanvasGroupBehaviourDrawer : TweenAnimationBehaviourDrawer
+    public class TweenCanvasGroupBehaviourDrawer : PropertyDrawer
     {
-        static readonly string[] parameters = new string[]
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            "alpha"
-        };
+            position.y += 7f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("alpha"));
+        }
 
-        protected override IEnumerable<string> GetPropertyNames() => parameters;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float height = 7f;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("alpha"));
+
+            return height;
+        }
     }
 }

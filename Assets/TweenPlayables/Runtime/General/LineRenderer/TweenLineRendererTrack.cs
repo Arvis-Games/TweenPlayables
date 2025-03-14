@@ -4,12 +4,12 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [TrackBindingType(typeof(LineRenderer))]
     [TrackClipType(typeof(TweenLineRendererClip))]
 #if UNITY_EDITOR
-    [DisplayName("Tween Playables/General/Line Renderer")]
+    [DisplayName("Tween Playables/General/Tween LineRenderer Track")]
 #endif
-    public sealed class TweenLineRendererTrack : TweenAnimationTrack<LineRenderer, TweenLineRendererMixerBehaviour, TweenLineRendererBehaviour> { }
+    public class TweenLineRendererTrack : TweenAnimationTrack<LineRenderer, TweenLineRendererMixerBehaviour, TweenLineRendererBehaviour> { }
 }

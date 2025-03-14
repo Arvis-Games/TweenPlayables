@@ -1,19 +1,28 @@
 using UnityEngine.UI;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
-    public sealed class TweenSliderMixerBehaviour : TweenAnimationMixerBehaviour<Slider, TweenSliderBehaviour>
+    public class TweenSliderMixerBehaviour : TweenAnimationMixerBehaviour<Slider, TweenSliderBehaviour>
     {
-        readonly FloatValueMixer valueMixer = new();
+        private FloatValueMixer valueMixer = new FloatValueMixer();
 
         public override void Blend(Slider binding, TweenSliderBehaviour behaviour, float weight, float progress)
         {
-            valueMixer.TryBlend(behaviour.Value, binding, progress, weight);
+            if (behaviour.value.active)
+            {
+                valueMixer.Blend(behaviour.value.Evaluate(binding, progress), weight);
+            }
         }
 
         public override void Apply(Slider binding)
         {
-            valueMixer.TryApplyAndClear(binding, (x, binding) => binding.value = x);
+            if (valueMixer.ValueCount > 0)
+            {
+                binding.value = valueMixer.Value;
+            }
+
+            valueMixer.Clear();
         }
     }
+
 }

@@ -1,20 +1,16 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class TweenLineRendererBehaviour : TweenAnimationBehaviour<LineRenderer>
+    public class TweenLineRendererBehaviour : TweenAnimationBehaviour<LineRenderer>
     {
-        [SerializeField] ColorTweenParameter startColor;
-        [SerializeField] ColorTweenParameter endColor;
-        [SerializeField] FloatTweenParameter startWidth;
-        [SerializeField] FloatTweenParameter endWidth;
-
-        public ReadOnlyTweenParameter<Color> StartColor => startColor;
-        public ReadOnlyTweenParameter<Color> EndColor => endColor;
-        public ReadOnlyTweenParameter<float> StartWidth => startWidth;
-        public ReadOnlyTweenParameter<float> EndWidth => endWidth;
+        public ColorTweenParameter startColor;
+        public ColorTweenParameter endColor;
+        public FloatTweenParameter startWidth;
+        public FloatTweenParameter endWidth;
 
         public override void OnTweenInitialize(LineRenderer playerData)
         {
@@ -24,4 +20,5 @@ namespace TweenPlayables
             endWidth.SetInitialValue(playerData, playerData.endWidth);
         }
     }
+
 }

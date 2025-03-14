@@ -1,34 +1,49 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Timeline;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomTimelineEditor(typeof(TweenRectTransformTrack))]
-    public sealed class TweenRectTransformTrackEditor : TweenAnimationTrackEditor
+    public class TweenRectTransformTrackEditor : TweenAnimationTrackEditor
     {
-        public override Color TrackColor => Styles.UGUIColor;
-        public override Texture2D TrackIcon => Styles.RectTransformIcon;
-        public override string DefaultTrackName => "Tween RectTransform Track";
+        public override Color trackColor => Styling.uguiColor;
+        public override Texture2D trackIcon => Styling.rectTransformIcon;
+        public override string defaultTrackName => "Tween RectTransform Track";
     }
 
     [CustomTimelineEditor(typeof(TweenRectTransformClip))]
-    public sealed class TweenRectTransformClipEditor : TweenAnimationClipEditor
+    public class TweenRectTransformClipEditor : TweenAnimationClipEditor
     {
-        public override string DefaultClipName => "Tween RectTransform";
-        public override Color ClipColor => Styles.UGUIColor;
-        public override Texture2D ClipIcon => Styles.RectTransformIcon;
+        public override string defaultClipName => "Tween RectTransform";
+        public override Color clipColor => Styling.uguiColor;
+        public override Texture2D clipIcon => Styling.rectTransformIcon;
     }
 
     [CustomPropertyDrawer(typeof(TweenRectTransformBehaviour))]
-    public sealed class TweenRectTransformBehaviourDrawer : TweenAnimationBehaviourDrawer
+    public class TweenRectTransformBehaviourDrawer : PropertyDrawer
     {
-        static readonly string[] parameters = new string[]
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            "anchoredPosition", "sizeDelta", "rotation", "scale"
-        };
+            position.y += 7f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("anchoredPosition"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("sizeDelta"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("rotation"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("scale"));
+        }
 
-        protected override IEnumerable<string> GetPropertyNames() => parameters;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float height = 13f;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("anchoredPosition"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("sizeDelta"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("rotation"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("scale"));
+
+            return height;
+        }
     }
 }

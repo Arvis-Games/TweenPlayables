@@ -1,24 +1,24 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
-    public static class Styles
+    public static class Styling
     {
         public static bool ToggleGroup(Rect position, bool foldout, ref bool toggle, string text, bool toggleOnLabelClick = true)
         {
-            var toggleRect = position;
+            Rect toggleRect = position;
             toggleRect.x += 2f;
             toggleRect.y += position.height * 0.23f;
             toggleRect.width = 13f;
             toggleRect.height = 13f;
 
-            var labelRect = position;
+            Rect labelRect = position;
             labelRect.y += 1f;
             labelRect.xMin += 21f;
 
             EditorGUI.LabelField(labelRect, text, EditorStyles.boldLabel);
-            var value = DrawFoldoutToggle(position, foldout);
+            bool value = DrawFoldoutToggle(position, foldout);
             toggle = GUI.Toggle(toggleRect, toggle, GUIContent.none, EditorStyles.toggle);
 
             var e = Event.current;
@@ -32,7 +32,7 @@ namespace TweenPlayables.Editor
 
         private static bool DrawFoldoutToggle(Rect position, bool foldout)
         {
-            var foldoutRect = position;
+            Rect foldoutRect = position;
             foldoutRect.x -= 13.5f;
             foldoutRect.y += position.height * 0.23f;
             foldoutRect.width = 13f;
@@ -40,7 +40,7 @@ namespace TweenPlayables.Editor
             return GUI.Toggle(foldoutRect, foldout, GUIContent.none, EditorStyles.foldout);
         }
 
-        public static Texture2D CsScriptIcon
+        public static Texture2D csScriptIcon
         {
             get
             {
@@ -48,7 +48,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Color TransformColor
+        public static Color transformColor
         {
             get
             {
@@ -65,7 +65,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Color RendererColor
+        public static Color rendererColor
         {
             get
             {
@@ -74,7 +74,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D SpriteRendererIcon
+        public static Texture2D spriteRendererIcon
         {
             get
             {
@@ -82,7 +82,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Color AudioColor
+        public static Color audioColor
         {
             get
             {
@@ -91,7 +91,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D AudioSourceIcon
+        public static Texture2D audioSourceIcon
         {
             get
             {
@@ -99,7 +99,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Color LightColor
+        public static Color lightColor
         {
             get
             {
@@ -108,7 +108,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D LightIcon
+        public static Texture2D lightIcon
         {
             get
             {
@@ -116,7 +116,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D LineRendererIcon
+        public static Texture2D lineRendererIcon
         {
             get
             {
@@ -124,7 +124,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Color CameraColor
+        public static Color cameraColor
         {
             get
             {
@@ -141,7 +141,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Color UGUIColor
+        public static Color uguiColor
         {
             get
             {
@@ -150,7 +150,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D RectTransformIcon
+        public static Texture2D rectTransformIcon
         {
             get
             {
@@ -158,7 +158,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D SliderIcon
+        public static Texture2D sliderIcon
         {
             get
             {
@@ -166,7 +166,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D ImageIcon
+        public static Texture2D imageIcon
         {
             get
             {
@@ -174,7 +174,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D CanvasGroupIcon
+        public static Texture2D canvasGroupIcon
         {
             get
             {
@@ -182,7 +182,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D TextIcon
+        public static Texture2D textIcon
         {
             get
             {
@@ -190,7 +190,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D OutlineIcon
+        public static Texture2D outlineIcon
         {
             get
             {
@@ -198,7 +198,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D ShadowIcon
+        public static Texture2D shadowIcon
         {
             get
             {
@@ -206,7 +206,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D MeshRendererIcon
+        public static Texture2D meshRendererIcon
         {
             get
             {
@@ -214,7 +214,7 @@ namespace TweenPlayables.Editor
             }
         }
 
-        public static Texture2D TextMeshProUGUIIcon
+        public static Texture2D textMeshProUGUIIcon
         {
             get
             {

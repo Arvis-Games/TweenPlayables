@@ -1,34 +1,49 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Timeline;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomTimelineEditor(typeof(TweenTextTrack))]
-    public sealed class TweenTextTrackEditor : TweenAnimationTrackEditor
+    public class TweenTextTrackEditor : TweenAnimationTrackEditor
     {
-        public override Color TrackColor => Styles.UGUIColor;
-        public override Texture2D TrackIcon => Styles.TextIcon;
-        public override string DefaultTrackName => "Tween Text Track";
+        public override Color trackColor => Styling.uguiColor;
+        public override Texture2D trackIcon => Styling.textIcon;
+        public override string defaultTrackName => "Tween Text Track";
     }
 
     [CustomTimelineEditor(typeof(TweenTextClip))]
-    public sealed class TweenTextClipEditor : TweenAnimationClipEditor
+    public class TweenTextClipEditor : TweenAnimationClipEditor
     {
-        public override string DefaultClipName => "Tween Text";
-        public override Color ClipColor => Styles.UGUIColor;
-        public override Texture2D ClipIcon => Styles.TextIcon;
+        public override string defaultClipName => "Tween Text";
+        public override Color clipColor => Styling.uguiColor;
+        public override Texture2D clipIcon => Styling.textIcon;
     }
 
     [CustomPropertyDrawer(typeof(TweenTextBehaviour))]
-    public sealed class TweenTextBehaviourDrawer : TweenAnimationBehaviourDrawer
+    public class TweenTextBehaviourDrawer : PropertyDrawer
     {
-        static readonly string[] parameters = new string[]
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            "color", "fontSize", "lineSpacing", "text"
-        };
+            position.y += 7f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("color"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("fontSize"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("lineSpacing"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("text"));
+        }
 
-        protected override IEnumerable<string> GetPropertyNames() => parameters;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float height = 15f;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("color"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("fontSize"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("lineSpacing"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("text"));
+
+            return height;
+        }
     }
 }

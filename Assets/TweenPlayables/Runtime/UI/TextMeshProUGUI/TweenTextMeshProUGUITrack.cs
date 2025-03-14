@@ -3,15 +3,13 @@ using System.ComponentModel;
 #endif
 using UnityEngine.Timeline;
 using TMPro;
-using System;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
-    [Obsolete]
     [TrackBindingType(typeof(TextMeshProUGUI))]
     [TrackClipType(typeof(TweenTextMeshProUGUIClip))]
 #if UNITY_EDITOR
-    [DisplayName("Tween Playables/Legacy/TextMeshProUGUI")]
+    [DisplayName("Tween Playables/UI/Tween TextMeshProUGUI Track")]
 #endif
-    public sealed class TweenTextMeshProUGUITrack : TweenAnimationTrack<TextMeshProUGUI, TweenTextMeshProUGUIMixerBehaviour, TweenTextMeshProUGUIBehaviour> { }
+    public class TweenTextMeshProUGUITrack : TweenAnimationTrack<TextMeshProUGUI, TweenTextMeshProUGUIMixerBehaviour, TweenTextMeshProUGUIBehaviour> { }
 }

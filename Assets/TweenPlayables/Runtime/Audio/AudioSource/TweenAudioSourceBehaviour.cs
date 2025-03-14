@@ -1,16 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class TweenAudioSourceBehaviour : TweenAnimationBehaviour<AudioSource>
+    public class TweenAudioSourceBehaviour : TweenAnimationBehaviour<AudioSource>
     {
-        [SerializeField] FloatTweenParameter volume;
-        [SerializeField] FloatTweenParameter pitch;
-
-        public ReadOnlyTweenParameter<float> Volume => volume;
-        public ReadOnlyTweenParameter<float> Pitch => pitch;
+        public FloatTweenParameter volume;
+        public FloatTweenParameter pitch;
 
         public override void OnTweenInitialize(AudioSource playerData)
         {
@@ -18,4 +15,5 @@ namespace TweenPlayables
             pitch.SetInitialValue(playerData, playerData.pitch);
         }
     }
+
 }

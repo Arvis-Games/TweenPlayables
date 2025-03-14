@@ -1,25 +1,50 @@
 using UnityEngine;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
-    public sealed class TweenCameraMixerBehaviour : TweenAnimationMixerBehaviour<Camera, TweenCameraBehaviour>
+    public class TweenCameraMixerBehaviour : TweenAnimationMixerBehaviour<Camera, TweenCameraBehaviour>
     {
-        readonly FloatValueMixer orthoSizeMixer = new();
-        readonly FloatValueMixer fovMixer = new();
-        readonly ColorValueMixer backgroundColorMixer = new();
+        private FloatValueMixer orthoSizeMixer = new FloatValueMixer();
+        private FloatValueMixer fovMixer = new FloatValueMixer();
+        private ColorValueMixer backgroundColorMixer = new ColorValueMixer();
 
         public override void Blend(Camera binding, TweenCameraBehaviour behaviour, float weight, float progress)
         {
-            orthoSizeMixer.TryBlend(behaviour.OrthographicSize, binding, progress, weight);
-            fovMixer.TryBlend(behaviour.FieldOfView, binding, progress, weight);
-            backgroundColorMixer.TryBlend(behaviour.BackgroundColor, binding, progress, weight);
+            if (behaviour.orthographicSize.active)
+            {
+                orthoSizeMixer.Blend(behaviour.orthographicSize.Evaluate(binding, progress), weight);
+            }
+
+            if (behaviour.fieldOfView.active)
+            {
+                fovMixer.Blend(behaviour.fieldOfView.Evaluate(binding, progress), weight);
+            }
+
+            if (behaviour.backgroundColor.active)
+            {
+                backgroundColorMixer.Blend(behaviour.backgroundColor.Evaluate(binding, progress), weight);
+            }
         }
 
         public override void Apply(Camera binding)
         {
-            orthoSizeMixer.TryApplyAndClear(binding, (x, binding) => binding.orthographicSize = x);
-            fovMixer.TryApplyAndClear(binding, (x, binding) => binding.fieldOfView = x);
-            backgroundColorMixer.TryApplyAndClear(binding, (x, binding) => binding.backgroundColor = x);
+            if (orthoSizeMixer.ValueCount > 0)
+            {
+                binding.orthographicSize = orthoSizeMixer.Value;
+            }
+            if (fovMixer.ValueCount > 0)
+            {
+                binding.fieldOfView = fovMixer.Value;
+            }
+            if (backgroundColorMixer.ValueCount > 0)
+            {
+                binding.backgroundColor = backgroundColorMixer.Value;
+            }
+
+            orthoSizeMixer.Clear();
+            fovMixer.Clear();
+            backgroundColorMixer.Clear();
         }
     }
+
 }

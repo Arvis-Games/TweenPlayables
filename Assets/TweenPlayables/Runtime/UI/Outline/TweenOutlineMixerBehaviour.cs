@@ -1,22 +1,38 @@
 using UnityEngine.UI;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
-    public sealed class TweenOutlineMixerBehaviour : TweenAnimationMixerBehaviour<Outline, TweenOutlineBehaviour>
+    public class TweenOutlineMixerBehaviour : TweenAnimationMixerBehaviour<Outline, TweenOutlineBehaviour>
     {
-        readonly ColorValueMixer colorMixer = new();
-        readonly Vector3ValueMixer distanceMixer = new();
+        private ColorValueMixer colorMixer = new ColorValueMixer();
+        private Vector2ValueMixer distanceMixer = new Vector2ValueMixer();
 
         public override void Blend(Outline binding, TweenOutlineBehaviour behaviour, float weight, float progress)
         {
-            colorMixer.TryBlend(behaviour.Color, binding, progress, weight);
-            distanceMixer.TryBlend(behaviour.Distance, binding, progress, weight);
+            if (behaviour.color.active)
+            {
+                colorMixer.Blend(behaviour.color.Evaluate(binding, progress), weight);
+            }
+            if (behaviour.distance.active)
+            {
+                distanceMixer.Blend(behaviour.distance.Evaluate(binding, progress), weight);
+            }
         }
 
         public override void Apply(Outline binding)
         {
-            colorMixer.TryApplyAndClear(binding, (x, binding) => binding.effectColor = x);
-            distanceMixer.TryApplyAndClear(binding, (x, binding) => binding.effectDistance = x);
+            if (colorMixer.ValueCount > 0)
+            {
+                binding.effectColor = colorMixer.Value;
+            }
+            if (distanceMixer.ValueCount > 0)
+            {
+                binding.effectDistance = distanceMixer.Value;
+            }
+
+            colorMixer.Clear();
+            distanceMixer.Clear();
         }
     }
+
 }

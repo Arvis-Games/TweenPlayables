@@ -3,34 +3,34 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomPropertyDrawer(typeof(TweenParameter<>), true)]
     public class TweenParamterDrawer : PropertyDrawer
     {
-        protected static readonly float headerHeight = EditorGUIUtility.singleLineHeight * 1.2f;
+        protected float headerHeight = EditorGUIUtility.singleLineHeight * 1.2f;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var indent = EditorGUI.indentLevel;
+            int indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
             position.xMin += 15f * indent;
 
-            var activeProperty = property.FindPropertyRelative("active");
-            var height = GetPropertyHeight(property, label);
+            SerializedProperty activeProperty = property.FindPropertyRelative("active");
+            float height = GetPropertyHeight(property, label);
 
-            var boxRect = position;
+            Rect boxRect = position;
             boxRect.xMin -= 3f;
             boxRect.height = height;
             EditorGUI.LabelField(boxRect, GUIContent.none, EditorStyles.helpBox);
 
-            var foldoutRect = position;
+            Rect foldoutRect = position;
             foldoutRect.xMin += 15f;
             foldoutRect.height = headerHeight;
 
-            var active = activeProperty.boolValue;
-            property.isExpanded = Styles.ToggleGroup(foldoutRect, property.isExpanded, ref active, property.displayName);
+            bool active = activeProperty.boolValue;
+            property.isExpanded = Styling.ToggleGroup(foldoutRect, property.isExpanded, ref active, property.displayName);
             activeProperty.boolValue = active;
             if (property.isExpanded)
             {
@@ -48,7 +48,7 @@ namespace TweenPlayables.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            var height = headerHeight;
+            float height = headerHeight;
             if (property.isExpanded)
             {
                 GUIHelper.AddPropertyHeight(ref height, property.FindPropertyRelative("startValue"));
@@ -71,7 +71,7 @@ namespace TweenPlayables.Editor
     }
 
     [CustomPropertyDrawer(typeof(StringTweenParameter))]
-    public sealed class StringTweenParameterDrawer : TweenParamterDrawer
+    public class StringTweenParameterDrawer : TweenParamterDrawer
     {
         public override void DrawProperties(Rect position, SerializedProperty property)
         {
@@ -84,13 +84,13 @@ namespace TweenPlayables.Editor
 
             if (scrambleModeProeprty.enumValueIndex == (int)ScrambleMode.Custom)
             {
-                GUIHelper.Field(ref position, property.FindPropertyRelative("customScrambleChars"), "Custom Scramble Chars");
+                GUIHelper.Field(ref position,property.FindPropertyRelative("customScrambleChars"), "Custom Scramble Chars");
             }
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            var height = headerHeight;
+            float height = headerHeight;
             if (property.isExpanded)
             {
                 height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2;
@@ -114,9 +114,9 @@ namespace TweenPlayables.Editor
             return height;
         }
 
-        static void DrawTextArea(ref Rect position, SerializedProperty property, GUIContent label)
+        private void DrawTextArea(ref Rect position, SerializedProperty property, GUIContent label)
         {
-            var labelRect = new Rect()
+            Rect labelRect = new Rect()
             {
                 x = position.x,
                 y = position.y,
@@ -126,37 +126,36 @@ namespace TweenPlayables.Editor
 
             EditorGUI.LabelField(labelRect, label.text);
 
-            using (var changeCheck = new EditorGUI.ChangeCheckScope())
+            EditorGUI.BeginChangeCheck();
+
+            Rect textAreaRect = new Rect()
             {
-                var textAreaRect = new Rect()
-                {
-                    x = labelRect.x,
-                    y = labelRect.y + EditorGUIUtility.singleLineHeight,
-                    width = labelRect.width,
-                    height = GetTextAreaHeight(property.stringValue)
-                };
+                x = labelRect.x,
+                y = labelRect.y + EditorGUIUtility.singleLineHeight,
+                width = labelRect.width,
+                height = GetTextAreaHeight(property.stringValue)
+            };
 
-                var textAreaValue = EditorGUI.TextArea(textAreaRect, property.stringValue);
+            string textAreaValue = EditorGUI.TextArea(textAreaRect, property.stringValue);
 
-                if (changeCheck.changed)
-                {
-                    property.stringValue = textAreaValue;
-                }
-
-                position.y += textAreaRect.height + EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+            if (EditorGUI.EndChangeCheck())
+            {
+                property.stringValue = textAreaValue;
             }
+
+            position.y += textAreaRect.height + EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
         }
 
-        static int GetNumberOfLines(string text)
+        private int GetNumberOfLines(string text)
         {
-            var content = Regex.Replace(text, @"\r\n|\n\r|\r|\n", Environment.NewLine);
-            var lines = content.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            string content = Regex.Replace(text, @"\r\n|\n\r|\r|\n", Environment.NewLine);
+            string[] lines = content.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
             return lines.Length;
         }
 
-        static float GetTextAreaHeight(string text)
+        private float GetTextAreaHeight(string text)
         {
-            var height = (EditorGUIUtility.singleLineHeight - 3.0f) * GetNumberOfLines(text) + 3.0f;
+            float height = (EditorGUIUtility.singleLineHeight - 3.0f) * GetNumberOfLines(text) + 3.0f;
             return Math.Max(height, EditorGUIUtility.singleLineHeight * 2.5f);
         }
     }

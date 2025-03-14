@@ -1,6 +1,6 @@
 using System;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     public static class EaseUtility
     {

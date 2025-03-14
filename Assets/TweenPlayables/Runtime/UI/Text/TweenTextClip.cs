@@ -1,4 +1,4 @@
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
-    public sealed class TweenTextClip : TweenAnimationClip<TweenTextBehaviour> { }
+    public class TweenTextClip : TweenAnimationClip<TweenTextBehaviour> { }
 }

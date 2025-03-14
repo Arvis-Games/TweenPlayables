@@ -1,18 +1,18 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class TweenSpriteRendererBehaviour : TweenAnimationBehaviour<SpriteRenderer>
+    public class TweenSpriteRendererBehaviour : TweenAnimationBehaviour<SpriteRenderer>
     {
-        [SerializeField] readonly ColorTweenParameter color;
-
-        public ReadOnlyTweenParameter<Color> Color => color;
+        public ColorTweenParameter color;
 
         public override void OnTweenInitialize(SpriteRenderer playerData)
         {
             color.SetInitialValue(playerData, playerData.color);
         }
     }
+
 }

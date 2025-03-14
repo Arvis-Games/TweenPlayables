@@ -4,12 +4,12 @@ using System.ComponentModel;
 using UnityEngine.UI;
 using UnityEngine.Timeline;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [TrackBindingType(typeof(Outline))]
     [TrackClipType(typeof(TweenOutlineClip))]
 #if UNITY_EDITOR
-    [DisplayName("Tween Playables/UI/Outline")]
+    [DisplayName("Tween Playables/UI/Tween Outline Track")]
 #endif
-    public sealed class TweenOutlineTrack : TweenAnimationTrack<Outline, TweenOutlineMixerBehaviour, TweenOutlineBehaviour> { }
+    public class TweenOutlineTrack : TweenAnimationTrack<Outline, TweenOutlineMixerBehaviour, TweenOutlineBehaviour> { }
 }

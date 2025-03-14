@@ -2,25 +2,28 @@ using UnityEngine;
 using UnityEditor.Timeline;
 using UnityEngine.Timeline;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     public abstract class TweenAnimationClipEditor : ClipEditor
     {
-        public abstract Color ClipColor { get; }
-        public abstract Texture2D ClipIcon { get; }
-        public abstract string DefaultClipName { get; }
+        public abstract Color clipColor { get; }
+        public abstract Texture2D clipIcon { get; }
+        public abstract string defaultClipName { get; }
+
+        private Texture2D[] icons = new Texture2D[1];
 
         public override ClipDrawOptions GetClipOptions(TimelineClip clip)
         {
             var options = base.GetClipOptions(clip);
-            options.icons = new Texture2D[] { ClipIcon };
-            options.highlightColor = ClipColor;
+            icons[0] = clipIcon;
+            options.icons = icons;
+            options.highlightColor = clipColor;
             return options;
         }
 
         public override void OnCreate(TimelineClip clip, TrackAsset track, TimelineClip clonedFrom)
         {
-            clip.displayName = DefaultClipName;
+            clip.displayName = defaultClipName;
         }
     }
 }

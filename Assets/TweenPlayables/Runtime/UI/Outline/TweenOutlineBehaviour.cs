@@ -1,17 +1,13 @@
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class TweenOutlineBehaviour : TweenAnimationBehaviour<Outline>
+    public class TweenOutlineBehaviour : TweenAnimationBehaviour<Outline>
     {
-        [SerializeField] ColorTweenParameter color;
-        [SerializeField] Vector3TweenParameter distance;
-
-        public ReadOnlyTweenParameter<Color> Color => color;
-        public ReadOnlyTweenParameter<Vector3> Distance => distance;
+        public ColorTweenParameter color;
+        public Vector3TweenParameter distance;
 
         public override void OnTweenInitialize(Outline playerData)
         {
@@ -19,4 +15,5 @@ namespace TweenPlayables
             distance.SetInitialValue(playerData, playerData.effectDistance);
         }
     }
+
 }

@@ -1,4 +1,4 @@
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
-    public sealed class TweenAudioSourceClip : TweenAnimationClip<TweenAudioSourceBehaviour> { }
+    public class TweenAudioSourceClip : TweenAnimationClip<TweenAudioSourceBehaviour> { }
 }

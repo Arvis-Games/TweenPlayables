@@ -1,22 +1,39 @@
 using UnityEngine;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
-    public sealed class TweenAudioSourceMixerBehaviour : TweenAnimationMixerBehaviour<AudioSource, TweenAudioSourceBehaviour>
+    public class TweenAudioSourceMixerBehaviour : TweenAnimationMixerBehaviour<AudioSource, TweenAudioSourceBehaviour>
     {
-        readonly FloatValueMixer volumeMixer = new();
-        readonly FloatValueMixer pitchMixer = new();
+        private FloatValueMixer volumeMixer = new FloatValueMixer();
+        private FloatValueMixer pitchMixer = new FloatValueMixer();
 
         public override void Blend(AudioSource binding, TweenAudioSourceBehaviour behaviour, float weight, float progress)
         {
-            volumeMixer.TryBlend(behaviour.Volume, binding, progress, weight);
-            pitchMixer.TryBlend(behaviour.Pitch, binding, progress, weight);
+            if (behaviour.volume.active)
+            {
+                volumeMixer.Blend(behaviour.volume.Evaluate(binding, progress), weight);
+            }
+
+            if (behaviour.pitch.active)
+            {
+                pitchMixer.Blend(behaviour.pitch.Evaluate(binding, progress), weight);
+            }
         }
 
         public override void Apply(AudioSource binding)
         {
-            volumeMixer.TryApplyAndClear(binding, (x, binding) => binding.volume = x);
-            pitchMixer.TryApplyAndClear(binding, (x, binding) => binding.pitch = x);
+            if (volumeMixer.ValueCount > 0)
+            {
+                binding.volume = volumeMixer.Value;
+            }
+            if (pitchMixer.ValueCount > 0)
+            {
+                binding.pitch = pitchMixer.Value;
+            }
+
+            volumeMixer.Clear();
+            pitchMixer.Clear();
         }
     }
+
 }

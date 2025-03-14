@@ -1,34 +1,40 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Timeline;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomTimelineEditor(typeof(TweenSpriteRendererTrack))]
-    public sealed class TweenSpriteRendererTrackEditor : TweenAnimationTrackEditor
+    public class TweenSpriteRendererTrackEditor : TweenAnimationTrackEditor
     {
-        public override Color TrackColor => Styles.RendererColor;
-        public override Texture2D TrackIcon => Styles.SpriteRendererIcon;
-        public override string DefaultTrackName => "Tween SpriteRenderer Track";
+        public override Color trackColor => Styling.rendererColor;
+        public override Texture2D trackIcon => Styling.spriteRendererIcon;
+        public override string defaultTrackName => "Tween SpriteRenderer Track";
     }
 
     [CustomTimelineEditor(typeof(TweenSpriteRendererClip))]
-    public sealed class TweenSpriteRendererClipEditor : TweenAnimationClipEditor
+    public class TweenSpriteRendererClipEditor : TweenAnimationClipEditor
     {
-        public override string DefaultClipName => "Tween SpriteRenderer";
-        public override Color ClipColor => Styles.RendererColor;
-        public override Texture2D ClipIcon => Styles.SpriteRendererIcon;
+        public override string defaultClipName => "Tween SpriteRenderer";
+        public override Color clipColor => Styling.rendererColor;
+        public override Texture2D clipIcon => Styling.spriteRendererIcon;
     }
 
     [CustomPropertyDrawer(typeof(TweenSpriteRendererBehaviour))]
-    public sealed class TweenSpriteRendererBehaviourDrawer : TweenAnimationBehaviourDrawer
+    public class TweenSpriteRendererBehaviourDrawer : PropertyDrawer
     {
-        static readonly string[] parameters = new string[]
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            "color",
-        };
+            position.y += 7f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("color"));
+        }
 
-        protected override IEnumerable<string> GetPropertyNames() => parameters;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float height = 7f;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("color"));
+
+            return height;
+        }
     }
 }

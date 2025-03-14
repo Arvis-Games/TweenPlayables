@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class EaseParameter
+    public class EaseParameter
     {
-        [SerializeField] Ease ease = Ease.Linear;
-        [NormalizedAnimationCurve, SerializeField] AnimationCurve customEaseCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+        public Ease ease = Ease.Linear;
+        [NormalizedAnimationCurve] public AnimationCurve customEaseCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
         public EaseParameter() { }
         public EaseParameter(Ease ease)

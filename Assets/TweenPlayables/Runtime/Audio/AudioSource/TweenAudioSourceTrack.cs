@@ -4,12 +4,15 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [TrackBindingType(typeof(AudioSource))]
     [TrackClipType(typeof(TweenAudioSourceClip))]
 #if UNITY_EDITOR
-    [DisplayName("Tween Playables/Audio/Audio Source")]
+    [DisplayName("Tween Playables/Audio/Tween AudioSource Track")]
 #endif
-    public sealed class TweenAudioSourceTrack : TweenAnimationTrack<AudioSource, TweenAudioSourceMixerBehaviour, TweenAudioSourceBehaviour> { }
+    public class TweenAudioSourceTrack : TweenAnimationTrack<AudioSource, TweenAudioSourceMixerBehaviour, TweenAudioSourceBehaviour>
+    {
+
+    }
 }

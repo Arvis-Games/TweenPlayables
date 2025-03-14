@@ -4,12 +4,12 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [TrackBindingType(typeof(Camera))]
     [TrackClipType(typeof(TweenCameraClip))]
 #if UNITY_EDITOR
-    [DisplayName("Tween Playables/General/Camera")]
+    [DisplayName("Tween Playables/General/Tween Camera Track")]
 #endif
-    public sealed class TweenCameraTrack : TweenAnimationTrack<Camera, TweenCameraMixerBehaviour, TweenCameraBehaviour> { }
+    public class TweenCameraTrack : TweenAnimationTrack<Camera, TweenCameraMixerBehaviour, TweenCameraBehaviour> { }
 }

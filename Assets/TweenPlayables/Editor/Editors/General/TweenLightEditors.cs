@@ -1,34 +1,46 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Timeline;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomTimelineEditor(typeof(TweenLightTrack))]
-    public sealed class TweenLightTrackEditor : TweenAnimationTrackEditor
+    public class TweenLightTrackEditor : TweenAnimationTrackEditor
     {
-        public override Color TrackColor => Styles.LightColor;
-        public override Texture2D TrackIcon => Styles.LightIcon;
-        public override string DefaultTrackName => "Tween Light Track";
+        public override Color trackColor => Styling.lightColor;
+        public override Texture2D trackIcon => Styling.lightIcon;
+        public override string defaultTrackName => "Tween Light Track";
     }
 
     [CustomTimelineEditor(typeof(TweenLightClip))]
-    public sealed class TweenLightClipEditor : TweenAnimationClipEditor
+    public class TweenLightClipEditor : TweenAnimationClipEditor
     {
-        public override Color ClipColor => Styles.LightColor;
-        public override Texture2D ClipIcon => Styles.LightIcon;
-        public override string DefaultClipName => "Tween Light";
+        public override Color clipColor => Styling.lightColor;
+        public override Texture2D clipIcon => Styling.lightIcon;
+        public override string defaultClipName => "Tween Light";
     }
 
     [CustomPropertyDrawer(typeof(TweenLightBehaviour))]
-    public sealed class TweenLightBehaviourDrawer : TweenAnimationBehaviourDrawer
+    public class TweenLightBehaviourDrawer : PropertyDrawer
     {
-        static readonly string[] parameters = new string[]
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            "color", "intensity", "shadowStrength"
-        };
+            position.y += 7f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("color"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("intensity"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("shadowStrength"));
+        }
 
-        protected override IEnumerable<string> GetPropertyNames() => parameters;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float height = 9f;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("color"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("intensity"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("shadowStrength"));
+
+            return height;
+        }
     }
 }

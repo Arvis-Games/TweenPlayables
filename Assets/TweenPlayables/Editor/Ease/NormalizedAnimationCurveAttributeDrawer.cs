@@ -1,13 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomPropertyDrawer(typeof(NormalizedAnimationCurveAttribute))]
-    public sealed class NormalizedAnimationCurveAttributeDrawer : PropertyDrawer
+    public class NormalizedAnimationCurveAttributeDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            var attr = (NormalizedAnimationCurveAttribute)attribute;
+
             if (property.propertyType != SerializedPropertyType.AnimationCurve)
             {
                 position = EditorGUI.PrefixLabel(position, label);
@@ -18,10 +22,10 @@ namespace TweenPlayables.Editor
                 return;
             }
 
-            using (var changeCheck = new EditorGUI.ChangeCheckScope())
+            using (var ccs = new EditorGUI.ChangeCheckScope())
             {
                 EditorGUI.PropertyField(position, property, label, true);
-                if (changeCheck.changed)
+                if (ccs.changed)
                 {
                     property.animationCurveValue = NormalizeTime(property.animationCurveValue);
                 }
@@ -33,7 +37,7 @@ namespace TweenPlayables.Editor
             return EditorGUI.GetPropertyHeight(property);
         }
 
-        static AnimationCurve NormalizeTime(AnimationCurve curve)
+        private static AnimationCurve NormalizeTime(AnimationCurve curve)
         {
             var keys = curve.keys;
             if (keys.Length <= 0)

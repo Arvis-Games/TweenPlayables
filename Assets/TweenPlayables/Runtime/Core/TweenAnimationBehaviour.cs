@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
     public abstract class TweenAnimationBehaviour<TBinding> : PlayableBehaviour where TBinding : Component
     {
-        bool initialized;
+        private bool initialized;
 
         public override void OnGraphStop(Playable playable)
         {
@@ -24,12 +24,12 @@ namespace TweenPlayables
                 OnTweenFinished();
             }
         }
-
+        
         internal void Initialize(TBinding playerData)
         {
             if (playerData == null) return;
             if (initialized) return;
-            
+            TBinding target = playerData as TBinding;
             OnTweenInitialize(playerData);
             initialized = true;
         }

@@ -1,34 +1,46 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Timeline;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomTimelineEditor(typeof(TweenRendererTrack))]
-    public sealed class TweenRendererTrackEditor : TweenAnimationTrackEditor
+    public class TweenRendererTrackEditor : TweenAnimationTrackEditor
     {
-        public override Color TrackColor => Styles.RendererColor;
-        public override Texture2D TrackIcon => Styles.MeshRendererIcon;
-        public override string DefaultTrackName => "Tween Renderer Track";
+        public override Color trackColor => Styling.rendererColor;
+        public override Texture2D trackIcon => Styling.meshRendererIcon;
+        public override string defaultTrackName => "Tween Renderer Track";
     }
 
     [CustomTimelineEditor(typeof(TweenRendererClip))]
-    public sealed class TweenRendererClipEditor : TweenAnimationClipEditor
+    public class TweenRendererClipEditor : TweenAnimationClipEditor
     {
-        public override string DefaultClipName => "Tween Renderer";
-        public override Color ClipColor => Styles.RendererColor;
-        public override Texture2D ClipIcon => Styles.MeshRendererIcon;
+        public override string defaultClipName => "Tween Renderer";
+        public override Color clipColor => Styling.rendererColor;
+        public override Texture2D clipIcon => Styling.meshRendererIcon;
     }
 
     [CustomPropertyDrawer(typeof(TweenRendererBehaviour))]
-    public sealed class TweenRendererBehaviourDrawer : TweenAnimationBehaviourDrawer
+    public class TweenRendererBehaviourDrawer : PropertyDrawer
     {
-        static readonly string[] parameters = new string[]
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            "color", "textureOffset", "textureScale"
-        };
+            position.y += 7f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("color"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("textureOffset"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("textureScale"));
+        }
 
-        protected override IEnumerable<string> GetPropertyNames() => parameters;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float height = 11f;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("color"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("textureOffset"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("textureScale"));
+
+            return height;
+        }
     }
 }

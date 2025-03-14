@@ -1,21 +1,15 @@
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class TweenTextBehaviour : TweenAnimationBehaviour<Text>
+    public class TweenTextBehaviour : TweenAnimationBehaviour<Text>
     {
-        [SerializeField] ColorTweenParameter color;
-        [SerializeField] IntTweenParameter fontSize;
-        [SerializeField] FloatTweenParameter lineSpacing;
-        [SerializeField] StringTweenParameter text;
-
-        public ReadOnlyTweenParameter<Color> Color => color;
-        public ReadOnlyTweenParameter<int> FontSize => fontSize;
-        public ReadOnlyTweenParameter<float> LineSpacing => lineSpacing;
-        public ReadOnlyTweenParameter<string> Text => text;
+        public ColorTweenParameter color;
+        public IntTweenParameter fontSize;
+        public FloatTweenParameter lineSpacing;
+        public StringTweenParameter text;
 
         public override void OnTweenInitialize(Text playerData)
         {
@@ -25,4 +19,5 @@ namespace TweenPlayables
             text.SetInitialValue(playerData, playerData.text);
         }
     }
+
 }

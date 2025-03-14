@@ -1,19 +1,17 @@
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 
-namespace TweenPlayables
+namespace AnnulusGames.TweenPlayables
 {
     [Serializable]
-    public sealed class TweenGraphicBehaviour : TweenAnimationBehaviour<Graphic>
+    public class TweenGraphicBehaviour : TweenAnimationBehaviour<Graphic>
     {
-        [SerializeField] ColorTweenParameter color;
-
-        public ReadOnlyTweenParameter<Color> Color => color;
+        public ColorTweenParameter color;
 
         public override void OnTweenInitialize(Graphic playerData)
         {
             color.SetInitialValue(playerData, playerData.color);
         }
     }
+
 }

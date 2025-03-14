@@ -1,34 +1,46 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Timeline;
 
-namespace TweenPlayables.Editor
+namespace AnnulusGames.TweenPlayables.Editor
 {
     [CustomTimelineEditor(typeof(TweenCameraTrack))]
-    public sealed class TweenCameraTrackEditor : TweenAnimationTrackEditor
+    public class TweenCameraTrackEditor : TweenAnimationTrackEditor
     {
-        public override string DefaultTrackName => "Tween Camera Track";
-        public override Color TrackColor => Styles.CameraColor;
-        public override Texture2D TrackIcon => Styles.cameraIcon;
+        public override string defaultTrackName => "Tween Camera Track";
+        public override Color trackColor => Styling.cameraColor;
+        public override Texture2D trackIcon => Styling.cameraIcon;
     }
 
     [CustomTimelineEditor(typeof(TweenCameraClip))]
-    public sealed class TweenCameraClipEditor : TweenAnimationClipEditor
+    public class TweenCameraClipEditor : TweenAnimationClipEditor
     {
-        public override string DefaultClipName => "Tween Camera";
-        public override Color ClipColor => Styles.CameraColor;
-        public override Texture2D ClipIcon => Styles.cameraIcon;
+        public override string defaultClipName => "Tween Camera";
+        public override Color clipColor => Styling.cameraColor;
+        public override Texture2D clipIcon => Styling.cameraIcon;
     }
 
     [CustomPropertyDrawer(typeof(TweenCameraBehaviour))]
-    public sealed class TweenCameraBehaviourDrawer : TweenAnimationBehaviourDrawer
+    public class TweenCameraBehaviourDrawer : PropertyDrawer
     {
-        static readonly string[] parameters = new string[]
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            "fieldOfView", "orthographicSize", "backgroundColor",
-        };
+            position.y += 7f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("fieldOfView"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("orthographicSize"));
+            position.y += 2f;
+            GUIHelper.Field(ref position, property.FindPropertyRelative("backgroundColor"));
+        }
 
-        protected override IEnumerable<string> GetPropertyNames() => parameters;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float height = 9f;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("fieldOfView"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("orthographicSize"));
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("backgroundColor"));
+
+            return height;
+        }
     }
 }
